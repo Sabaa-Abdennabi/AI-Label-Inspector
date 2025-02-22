@@ -1,0 +1,33 @@
+import { useEffect, useState } from "react";
+import MonthlyRecurringRevenueChart from "./MonthlyRecurringRevenueChart";
+import { getMrrData } from "../../services/dashboardApiService";
+import { DailySum } from "../../interfaces/interface";
+import { setAuthToken } from "../../utils/setAuthToken";
+import { useAuth } from "../../context/AuthContext";
+import { useDashboard } from "../../context/DashboardContext";
+
+export const MontlyRecurringRevenue = () => {
+  const [mrr, setMrr] = useState(0);
+  const [formattedMrr, setFormattedMrr] = useState('$0');
+  const [xData, setXData] = useState([]);
+  const [yData, setYData] = useState([]);
+
+  const { token } = useAuth();
+  const { dateRange, days } = useDashboard();
+  
+
+  return (
+    <div className="bg-white w-full rounded-xl p-5">
+      <div className="flex flex-row">
+        <h4 className="font-bold text-sky-600">MRR</h4>
+      </div>
+
+      <div className="flex flex-row h-[30px] pt-3">
+        <span className="font-bold text-sky-600">{formattedMrr}</span>
+        <span className="text-sky-600 ms-auto">{days} days</span>
+      </div>
+
+      <MonthlyRecurringRevenueChart xData={xData} yData={yData} />
+    </div>
+  );
+}

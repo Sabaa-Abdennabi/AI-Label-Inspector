@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: "Space Grotesk";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+select.c-month-picker {
+  font-family: 'Source Sans Pro', 'Lucida Grande', sans-serif;
+}
