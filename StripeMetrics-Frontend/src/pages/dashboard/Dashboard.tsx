@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useDashboard, defaultDateRange } from "../../context/DashboardContext";
 import { DateRange } from "../../interfaces/interface";
 import { ImageInput } from "../../components/image-input/ImageInput";
+import { Link } from "react-router-dom";
 
 export const Dashboard: React.FC = () => {
   const [value, setValue] = useState<DateRange>(defaultDateRange);
@@ -30,10 +31,10 @@ export const Dashboard: React.FC = () => {
       <div className="w-full max-w-6xl bg-white shadow-lg rounded-xl p-6 flex flex-col lg:flex-row items-center justify-between">
         <div className="flex flex-row items-center ">
         <img src="assets/img/clothes.png" className="w-10 mr-2"></img>
-        <h2 className="text-3xl font-bold text-black">DefectUs</h2></div>
+        <Link to="/"><h2 className="text-3xl font-bold text-black">DefectUs</h2></Link></div>
         <div className="flex items-center space-x-4 mt-4 lg:mt-0">
           {/* <Datepicker value={value} onChange={handleValueChange}  /> */}
-          <button
+          {/* <button
             onClick={appLogout}
             className="flex items-center bg-gray-200 hover:bg-black text-black hover:text-white px-4 py-2 rounded-lg shadow transition"
           >
@@ -52,7 +53,7 @@ export const Dashboard: React.FC = () => {
               />
             </svg>
             Logout
-          </button>
+          </button> */}
         </div>
       </div>
 
