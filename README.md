@@ -29,7 +29,7 @@ The primary goals of this project are:
 - **Deep Learning Model:** YOLO (You Only Look Once) for defect detection.
 - **Frontend:** React for building an interactive and responsive UI.
 - **Backend:** Python-based FastAPI for model inference and data processing.
-```
+
 
 ## Installation & Setup
 ### 1. Clone the Repository
