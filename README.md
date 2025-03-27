@@ -34,8 +34,8 @@ The primary goals of this project are:
 ## Installation & Setup
 ### 1. Clone the Repository
 ```sh
- git clone https://github.com/your-repo-url.git
- cd ai-defect-detection
+ git clone https://github.com/Sabaa-Abdennabi/AI-Label-Inspector.git
+ cd AI-Label-Inspector
 ```
 ### 2. Backend Setup
 - Navigate to the `model` directory:
@@ -76,12 +76,8 @@ The primary goals of this project are:
 - Add support for multi-language interfaces.
 - Implement cloud-based model deployment for scalability.
 
-## License
-This project is open-source and licensed under [MIT License](LICENSE).
-
 ## Contributing
 Contributions are welcome! Feel free to submit issues or pull requests.
 
-## Contact
-For inquiries, reach out to **[Your Name]** at **your.email@example.com**.
+
 
