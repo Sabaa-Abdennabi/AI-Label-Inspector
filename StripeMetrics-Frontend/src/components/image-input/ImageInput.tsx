@@ -21,6 +21,7 @@ interface Detection {
 export const ImageInput = () => {
   const [detection, setDetection] = useState<Detection | null>(null);
   const [loading, setLoading] = useState(false);
+  const [originalImageUrl, setOriginalImageUrl] = useState<string | null>(null); // Added state for original image
 
   const handleFileUpload = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -28,6 +29,7 @@ export const ImageInput = () => {
     const file = event.target.files?.[0];
     if (!file) return;
 
+    setOriginalImageUrl(URL.createObjectURL(file)); // Create a temporary URL for the original image
     setLoading(true);
     const formData = new FormData();
     formData.append("image", file);
@@ -53,6 +55,87 @@ export const ImageInput = () => {
 
   return (
     <div className="flex flex-col items-center justify-center w-full p-6 space-y-6">
+      {/* Results Section */}
+      {detection && (
+        <div className="bg-white dark:bg-gray-800 w-full flex flex-col p-5 rounded-xl shadow-lg">
+          <div className="flex flex-col space-y-4">
+            <h4 className="font-bold text-lg text-gray-700 dark:text-gray-300">
+              🛠 Detection Results
+            </h4>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+              {detection.message}
+            </p>
+
+            {/* Image Section */}
+            <div className="flex space-x-4 mt-4 w-full flex-row gap-4">
+              {/* Original Image */}
+              {originalImageUrl && (
+                <div className="w-full sm:w-1/2">
+                  <h5 className="font-semibold text-gray-700 dark:text-gray-300">
+                    Original Image
+                  </h5>
+                  <img
+                    src={originalImageUrl}
+                    alt="Original"
+                    className="w-full h-auto border rounded-lg shadow-sm"
+                  />
+                </div>
+              )}
+
+              {/* Annotated Image */}
+              <div className="w-full sm:w-1/2">
+                <h5 className="font-semibold text-gray-700 dark:text-gray-300">
+                  Annotated Image
+                </h5>
+                <img
+                  src={`http://127.0.0.1:5000${detection.annotated_image_url}`}
+                  alt="Annotated"
+                  className="w-full h-auto border rounded-lg shadow-sm"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Prediction Details */}
+          <ul className="mt-4 flex flex-wrap gap-4 w-full">
+            {detection.predictions.map((prediction, index) => (
+              <li
+                key={index}
+                className="flex flex-col p-4 rounded-lg bg-gray-100 dark:bg-gray-700 w-full sm:w-1/2 lg:w-1/3 xl:w-1/4"
+              >
+                <p className="font-bold text-gray-700 dark:text-gray-300">
+                  🏷 Class:{" "}
+                  <span className="text-blue-500">{prediction.class_name}</span>
+                </p>
+                <p className="text-md text-gray-600 dark:text-gray-400">
+                  Confidence: {Math.round(prediction.confidence * 100)}%
+                </p>
+
+                {/* Confidence Bar */}
+                <div className="w-full bg-gray-300 dark:bg-gray-600 rounded-full h-2.5 mt-1">
+                  <div
+                    className="bg-gray-600 h-2.5 rounded-full"
+                    style={{
+                      width: `${Math.round(prediction.confidence * 100)}%`,
+                    }}
+                  />
+                </div>
+
+                <p className="text-md text-gray-500 dark:text-gray-400 mt-1">
+                  📍 Bounding Box: ({prediction.bounding_box.xmin},{" "}
+                  {prediction.bounding_box.ymin}) → (
+                  {prediction.bounding_box.xmax}, {prediction.bounding_box.ymax}
+                  )
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <h2>
+        Upload an image of your textile label below and we'll take care of the
+        detection of defects in it using our AI 🤖 model{" "}
+      </h2>
       {/* File Upload UI */}
       <label
         htmlFor="dropzone-file"
@@ -93,65 +176,7 @@ export const ImageInput = () => {
 
       {/* Loading Indicator */}
       {loading && (
-        <div className="text-blue-500 font-semibold">Processing image...</div>
-      )}
-
-      {/* Results Section */}
-      {detection && (
-        <div className="bg-white dark:bg-gray-800 w-full flex flex-row max-w-lg p-5 rounded-xl shadow-lg">
-          <div className="space-y-4">
-          <h4 className="font-bold text-lg text-gray-700 dark:text-gray-300">
-            🛠 Detection Results
-          </h4>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            {detection.message}
-          </p>
-
-          {/* Annotated Image Display */}
-          <div className="mt-4">
-            <img
-              src={`http://127.0.0.1:5000${detection.annotated_image_url}`}
-              alt="Annotated"
-              className="w-full h-auto border rounded-lg shadow-sm"
-            />
-          </div>
-          </div>
-
-          {/* Prediction Details */}
-          <ul className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {detection.predictions.map((prediction, index) => (
-              <li
-                key={index}
-                className="p-4 rounded-lg bg-gray-100 dark:bg-gray-700"
-              >
-                <p className="font-bold text-gray-700 dark:text-gray-300">
-                  🏷 Class:{" "}
-                  <span className="text-blue-500">{prediction.class_name}</span>
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Confidence: {Math.round(prediction.confidence * 100)}%
-                </p>
-
-                {/* Confidence Bar */}
-                <div className="w-full bg-gray-300 dark:bg-gray-600 rounded-full h-2.5 mt-1">
-                  <div
-                    className="bg-blue-500 h-2.5 rounded-full"
-                    style={{
-                      width: `${Math.round(prediction.confidence * 100)}%`,
-                    }}
-                  ></div>
-                </div>
-
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                  📍 Bounding Box: ({prediction.bounding_box.xmin},{" "}
-                  {prediction.bounding_box.ymin}) → (
-                  {prediction.bounding_box.xmax}, {prediction.bounding_box.ymax}
-                  )
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <div className="text-black font-semibold">Processing image...</div>
       )}
     </div>
   );
