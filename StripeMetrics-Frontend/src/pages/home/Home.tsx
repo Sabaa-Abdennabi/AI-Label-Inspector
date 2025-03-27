@@ -5,8 +5,8 @@ export const Home: React.FC = () => {
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center align-center px-4">
       <div className="relative">
-        <img className="xl:w-[36px] w-[24px] xl:h-[36px] h-[24px] absolute xl:right-[-40px] right-[-30px] xl:top-[-20px] top-[-12px]" src="assets/img/stripe-round-logo.png" alt="Stripe" />
-        <h1 className="xl:text-7xl text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-indigo-600 drop-shadow-lg shadow-slate-500">StripeMetrics</h1>
+        <img className="xl:w-[36px] w-[24px] xl:h-[36px] h-[24px] absolute xl:right-[-40px] right-[-30px] xl:top-[-20px] top-[-12px]" src="assets/img/stripe-round-logo.png" alt="Defectus" />
+        <h1 className="xl:text-7xl text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-indigo-600 drop-shadow-lg shadow-slate-500">Defectus</h1>
       </div>
       <div className='py-16 flex flex-row space-x-2'>
         <Link to="/signup">
