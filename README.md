@@ -76,8 +76,9 @@ The primary goals of this project are:
 - Add support for multi-language interfaces.
 - Implement cloud-based model deployment for scalability.
 
-## Contributing
-Contributions are welcome! Feel free to submit issues or pull requests.
-
+## Authors
+- Sabaa Abdennabi
+- Arij Thabet
+- Amine Yahya
 
 
